@@ -352,6 +352,124 @@ FString AElection_NetworkBPLibrary::Message_ReadElectionString(TArray<uint8>& Me
 		return FString("");
 }
 
+FString AElection_NetworkBPLibrary::GetStringFromJson(FString& Message, const FString Key)
+{
+	FString jsonstr = Message;	// Recive load json text
+	FString key = Key;
+	FString strResult;
+
+	//FFileHelper::LoadFileToString(jsonstr, *filePath);	// Load json to filePath
+
+	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonstr);
+	TSharedPtr<FJsonObject> jsonObj = MakeShareable(new FJsonObject());
+
+	if (FJsonSerializer::Deserialize(reader, jsonObj) && jsonObj.IsValid())
+	{
+		strResult = jsonObj->GetStringField(key);
+		return strResult;
+	}
+	else
+		return "";
+}
+
+TArray<UArrayData*> AElection_NetworkBPLibrary::GetArrayFromJson(FString& Message, const FString Key)
+{
+	TArray<UArrayData*> arrResult;
+	arrResult.Empty();
+
+	if (Message != "" && Key != "")
+	{
+		FString jsonStr = Message;
+		FString key = Key;
+
+		TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<>::Create(jsonStr);
+		TSharedPtr<FJsonObject> jsonObj = MakeShareable(new FJsonObject());
+
+		if (FJsonSerializer::Deserialize(reader, jsonObj) && jsonObj.IsValid())
+		{
+			const TArray<TSharedPtr<FJsonValue>>* getArray;
+			if (jsonObj->TryGetArrayField(key, getArray))
+
+				for (const TSharedPtr<FJsonValue>& val : *getArray)
+				{
+				}
+		}
+	}
+	return arrResult;
+}
+					/*TSharedPtr<FJsonObject> obj = val->AsObject();
+					if (obj.IsValid())
+					{
+
+					
+						FString name = obj->GetStringField("Name");
+						FString jdName = obj->GetStringField("JdName");
+						FString dangsun = obj->GetStringField("Dangsun");
+						FString dugSu = obj->GetStringField("DugSu");
+						FString dpRate = obj->GetStringField("DpRate");
+						FString dpRateBirae = obj->GetStringField("DpRateBirae");
+						FString diffDugSu = obj->GetStringField("DiffDugSu");
+						FString diffDpRate = obj->GetStringField("DiffDpRate");
+						FString sggName = obj->GetStringField("SggName");
+						FString sidoName = obj->GetStringField("SidoName");
+						FString gpRate = obj->GetStringField("gpRate");
+						FString totalSeats = obj->GetStringField("TotalSeats");
+						FString sggSeats = obj->GetStringField("SggSeats");
+						FString rank = obj->GetStringField("RNK");
+						FString tpRate = obj->GetStringField("TpRate");
+						FString sgInsu = obj->GetStringField("SgInsu");
+						FString totTusu = obj->GetStringField("TotTusu");
+						FString birae = obj->GetStringField("Birae1");
+						FString gender = obj->GetStringField("Gender");
+						FString giho = obj->GetStringField("GiHo");
+						FString gpyn = obj->GetStringField("GpYn");
+						FString title = obj->GetStringField("title");
+						FString seat1 = obj->GetStringField("Seat1");
+						FString seat2 = obj->GetStringField("Seat2");
+						FString seat3 = obj->GetStringField("Seat3");
+						FString seat4 = obj->GetStringField("Seat4");
+						FString jd1 = obj->GetStringField("jd1");
+						FString jd2 = obj->GetStringField("jd2");
+						FString jd3 = obj->GetStringField("jd3");
+						FString jd4 = obj->GetStringField("jd4");
+
+						UArrayData* D = NewObject<UArrayData>();
+						D->Name = name;
+						D->TpRate = tpRate;
+						D->JdName = jdName;
+						D->Dangsun = dangsun;
+						D->DugSu = dugSu;
+						D->DpRate = dpRate;
+						D->DpRateBirae = dpRateBirae;
+						D->DiffDugSu = diffDugSu;
+						D->DiffDpRate = diffDpRate;
+						D->SggName = sggName;
+						D->SidoName = sidoName;
+						;						D->gpRate = gpRate;
+						D->TotalSeats = totalSeats;
+						D->SggSeats = sggSeats;
+						D->Rank = rank;
+						D->TpRate = tpRate;
+						D->SgInsu = sgInsu;
+						D->TotTusu = totTusu;
+						D->Birae = birae;
+						D->Gender = gender;
+						D->GiHo = giho;
+						D->GpYn = gpyn;
+						D->Title = title;
+						D->Seat1 = seat1;
+						D->Seat2 = seat2;
+						D->Seat3 = seat3;
+						D->Seat4 = seat4;
+						D->Jd1 = jd1;
+						D->Jd2 = jd2;
+						D->Jd3 = jd3;
+						D->Jd4 = jd4;
+
+						arrResult.Add(D);
+					}*/
+
+
 FString AElection_NetworkBPLibrary::Message_ReadFile(const FString& FullPath)
 {
 	FString sRet = ("");

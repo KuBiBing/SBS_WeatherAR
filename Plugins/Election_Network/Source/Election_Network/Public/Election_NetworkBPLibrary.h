@@ -14,6 +14,105 @@ DECLARE_DYNAMIC_DELEGATE_OneParam(FTcpSocketDisconnectDelegate, int32, Connectio
 DECLARE_DYNAMIC_DELEGATE_OneParam(FTcpSocketConnectDelegate, int32, ConnectionId);
 DECLARE_DYNAMIC_DELEGATE_TwoParams(FTcpSocketReceivedMessageDelegate, int32, ConnectionId, UPARAM(ref) TArray<uint8>&, Message);
 
+UCLASS(BlueprintType)
+class UArrayData : public UObject
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString JdName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Dangsun;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString DugSu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString DpRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString DpRateBirae;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString DiffDugSu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString DiffDpRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString SggName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString SidoName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString gpRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString TotalSeats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString SggSeats;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Rank;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString TpRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString SgInsu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString TotTusu;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Birae;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Gender;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString GiHo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString GpYn;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Title;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Seat1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Seat2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Seat3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Seat4;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Jd1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Jd2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Jd3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Jd4;
+
+};
+
+
 UCLASS(Blueprintable, BlueprintType)
 class ELECTION_NETWORK_API AElection_NetworkBPLibrary : public AActor
 {
@@ -108,6 +207,13 @@ public:
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Read Election String", Keywords = "read Messag"), Category = "Election_MBCCNI_Socket")
 		static FString Message_ReadElectionString(UPARAM(ref) TArray<uint8>& Message);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get String From Json", Keywords = "Parse Message"), Category = "Election_MBCCNI_Socket")
+		static FString GetStringFromJson(UPARAM(ref) FString& Message, const FString Key);
+
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get Array From Json", Keywords = "Parse Message"), Category = "Election_MBCCNI_Socket")
+		static TArray<UArrayData*> GetArrayFromJson(UPARAM(ref) FString& Message, const FString Key);
+
 
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Read Election File", Keywords = "read File"), Category = "Election_MBCCNI_Socket")
 		static FString Message_ReadFile(UPARAM(ref) const FString& FullPath);
